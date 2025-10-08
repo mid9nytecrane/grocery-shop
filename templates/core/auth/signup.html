@@ -1,0 +1,75 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class='min-h-screen flex justify-center items-center bg-gray-50 p-12 px-4 sm:px-6 lg:px-8'>
+    <div class='max-w-md w-full space-y-8 bg-slate-900 pt-8 md:pt-0 rounded-xl md:rounded-none md:shadow-none shadow-md'>
+
+        <!-- User icon (mobile only) -->
+        <div class="flex justify-center md:hidden"> 
+            
+            <h1 class='text-center text-3xl font-semibold text-white'>Sign Up</h1>
+        </div>
+    
+        <div class='max-w-md w-full space-y-8 bg-slate-50 px-4 py-6 rounded-ss-[55px] md:rounded-none shadow-md'>
+               <!--signup-->
+            <h1 class='hidden md:block text-center text-3xl font-semibold text-gray-900'>Sign Up</h1> 
+
+            <form action="" method='post'>
+                {% csrf_token %}
+                {% comment %} {{form.as_p}} {% endcomment %}
+                
+                <!--first name-->
+                <p class='mb-4'>
+                    <label for="id_first_name" class='block text-normal' >First Name</label>
+                    <input type="text" name='first_name' maxlength="150" required \
+                    id='id_first_name' class='p-4 rounded-lg w-full '>
+                </p>
+    
+                <!--last name-->
+                <p class='mb-4'>
+                    <label for="id_last_name" class='block text-normal' >Last Name</label>
+                    <input type="text" name='last_name' maxlength="150" required \
+                    id='id_last_name' class='p-4 rounded-lg w-full '>
+                </p>
+                <!--username-->
+                <p class='mb-4'>
+                    <label for="id_username" class='block text-normal' >Username</label>
+                    <input type="text" name='username' maxlength="150" required \
+                    id='id_username' class='p-4 rounded-lg w-full '>
+                </p>
+                <!--email-->
+                <p class='mb-4'>
+                    <label for="id_email" class='block text-normal' >Email Address</label>
+                    <input type="email" name='email' maxlength="150" required \
+                    id='id_email' class='p-4 rounded-lg w-full '>
+                </p>
+                <!--password1-->
+                <p class='mb-4'>
+                    <label for="id_password1" class='block text-normal' >Password</label>
+                    <input type="password" name='password1' maxlength="150" required \
+                    id='id_password1' class='p-4 rounded-lg w-full '>
+                    {% if form.password1.help_text %}
+                        <small class='text-muted form-text'>
+                            {{form.password1.help_text}}
+                        </small>
+                    {% endif %}
+                </p>
+                <!--password2-->
+                <p class='my-4 '>
+                    <label for="id_password2" class='block text-normal' >Confirm Password</label>
+                    <input type="password" name='password2' maxlength="150" required \
+                    id='id_password2' class='p-4 rounded-lg w-full '>
+                </p>
+    
+               <input type="submit" value='Sign up' \
+               class='bg-gray-900 rounded-md text-white py-4 px-4 w-full text-center text-normal border-2 hover:bg-yellow-500 hover:text-black hover:scale-108 ease-in duration-300'>
+
+               <p class='text-sm text-gray-500 w-full mx-auto mt-6'>
+                Already have an account? Then please<a href="{% url 'login'%}" class='text-blue-600 hover:text-gray-400'> login</a> 
+                first. 
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

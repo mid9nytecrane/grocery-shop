@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class='w-full py-6 md:py-10 text-gray-700 bg-slate-300'>
+    <h1 class='text-center text-lg md:text-3xl font-semibold'>shopping cart</h1>
+    <p class='text-sm md:text-medium text-gray-700 text-center'>home/shopping cart</p>
+</div>
+<div class='md:w-4/5 mx-auto px-2  md:mt-12'>
+    <div class='grid grid-cols-1  md:grid-cols-3 gap-4'>
+        <!--table of products-->
+        <div class="relative overflow-x-auto shadow-md rounded-lg col-span-2">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Product name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Color
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Quantity
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Subtotal
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if products %}
+                    {% for product in products %}
+                    
+                    <tr class="bg-white border-b bg-slate-200 text-gray-700 border-gray-200">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <div class='md:flex md:justify-center md:items-center gap-2'>
+    
+                                <img class='rounded-lg object-fit w-auto h-20 hover:scale-112' src=" {{product.image.url}}" alt="notebook">
+                                <span>{{product.name}}</span>
+                            </div>
+                            
+                        </th>
+                        <td class="px-6 py-4">
+                            GH₵ {{product.price}}
+                        </td>
+                        <td class="px-4 py-4">
+                            <div class='flex justify-center items-center'
+                            x-data="{count:0}"
+                            >
+                                <button class='w-12 border h-auto rounded-l-full p-1  text-sm font-bold hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed'
+                                x-on:click="count--"
+                                :disabled="count <=0"
+                                >–</button>
+                                <p class='border p-1 font-bold'><span x-text="count"></span></p>
+                                <button class='w-12 border h-auto rounded-r-full p-1 text-sm font-bold hover:bg-gray-100'
+                                x-on:click="count++"
+                                >+</button>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            $2999
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                
+            </tbody>
+        </table>
+        </div>
+
+
+        <!--order summary-->
+        <div class='bg-green-200'>
+            order summary
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
+

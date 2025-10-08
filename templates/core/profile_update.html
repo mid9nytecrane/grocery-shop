@@ -1,0 +1,82 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class='w-full py-10 md:py-14 text-gray-700 bg-slate-300'>
+    <h1 class='text-center text-3xl md:text-3xl lg:text-3xl font-semibold'>Your Profile</h1>
+    <p class='text-sm md:text-medium text-gray-700 text-center'></p>
+</div>
+
+
+<section class="min-h-screen bg-gray-50 text-gray-100 py-12">
+  <div class="container mx-auto px-6 lg:px-12">
+
+    <!-- Profile Header -->
+    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-gray-700 pb-6">
+        <!-- https://cdn-icons-png.flaticon.com/512/3135/3135715.png-->
+      <img src="{{profile.profile_image.url}}" 
+           alt="User Avatar" 
+           class="w-28 h-28 rounded-full  border-4 border-amber-500 shadow-md">
+      <div class="text-center md:text-left space-y-1">
+        <h2 class="text-2xl text-gray-800 font-bold">Sheriff Sakara</h2>
+        <p class="text-gray-700 font-medium">@{{request.user.username}}</p>
+        <p class="text-gray-400 text-sm">Joined: {{request.user.date_joined}}</p>
+      </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="grid gap-8 md:grid-cols-3">
+
+      <!-- Sidebar -->
+      <aside class="bg-gray-800 p-6 rounded-2xl shadow-lg space-y-4">
+        <h3 class="text-lg font-semibold text-amber-400 mb-2">Menu</h3>
+        <nav class="space-y-3">
+          <a href="{% url 'userprofile'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Profile Overview</a>
+          <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Edit Profile</a>
+          <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Order History</a>
+          <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Saved Addresses</a>
+          <a href="{% url 'logout'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Logout</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="md:col-span-2 bg-gray-800 p-8 rounded-2xl shadow-lg space-y-8">
+        
+        <form action="" method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Example: if using crispy forms -->
+            {# {{ form|crispy }} #}
+
+            <!-- If you’re rendering manually -->
+            <div class="grid md:grid-cols-2 gap-6">
+              {% for field in form %}
+                <div>
+                  <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">
+                    {{ field.label }}
+                  </label>
+                  {{ field }}
+                  {% if field.errors %}
+                    <p class="text-red-400 text-sm mt-1">{{ field.errors|join:", " }}</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="flex justify-end pt-4">
+              <button type="submit"
+                      class="bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-2 rounded-full shadow-md transition hover:scale-[1.02]">
+                Save Changes
+              </button>
+            </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock content %}
+
+

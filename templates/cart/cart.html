@@ -1,0 +1,293 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class='w-full py-10 md:py-14 text-gray-700 bg-slate-300'>
+
+
+     <!--message alert, when product added to cart-->
+
+    
+    <div class='w-2/3 mx-auto'
+    x-data="{ showAlert: true}" x-init="setTimeout(() => showAlert = false, 1000)"
+    >
+       
+
+        {% if messages %}
+            {% for message in messages %}
+            <div x-show="showAlert"
+            x-transition:enter="transition ease-out duration-3000"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-3000"
+            x-transition:leave-start="opacity-100"
+            role="alert"
+            id="alert-4" class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+            <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ms-3 text-lg font-medium">
+                <span class='font-semibold'>{{message}}</span>
+            </div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700" data-dismiss-target="#alert-4" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+                    {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <h1 class='text-center text-3xl md:text-3xl lg:text-3xl font-semibold'>shopping cart</h1>
+    <p class='text-sm md:text-medium text-gray-700 text-center'>home/shopping cart</p>
+</div>
+<div class='lg:w-5/6 mx-auto px-2   md:mt-12'>
+    {% if cart_products %}
+    <div class='grid grid-cols-1  md:grid-cols-4 gap-4'>
+        <!--table of products-->
+        <div class="relative overflow-x-auto shadow-md rounded-lg mb-10 col-span-3 bg-white">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Product name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Price
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Quantity
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Subtotal
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for product in cart_products %}
+                    
+                    <tr class="bg-white border-b bg-slate-200 text-gray-700 border-gray-200">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            
+                            <div class='md:flex md:justify-start md:gap-6 md:items-center gap-2'>
+                                <!--cancel or delete product-->
+                                <button type='button' data-index='{{product.id}}'
+                                class='delete-product hover:bg-gray-300 hover:rounded-full hover:scale-110 duration-300 hover:text-red-500 py-1.5 px-2'>
+    
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                    <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+
+                                <!--product image and name-->
+                                <div class='md:flex md:justify-center md:items-center gap-2'>
+
+                                    <img class='rounded-lg object-fit w-auto h-20 hover:scale-115 transition transform duration-300 shadow-md bg-[#dddddd]' src=" {{product.image.url}}" alt="notebook">
+                                    <span>{{product.name}}</span>
+                                </div>
+
+                            </div>
+                            
+                        </th>
+                        <td class="px-6 py-4">
+                            GH₵ {{product.price}}
+                        </td>
+                        <td class="px-4 py-4">
+                            {% for key,value in quantities.items %}
+                                {% if key == product.id|slugify %}
+                                
+                                <div class='flex justify-center items-center'
+                                x-data="{count:{{value}}}"
+                                >
+                                    <input hidden type="number" name='quantity' class="update_qty" x-model="count">
+                                    <button type='button' value='{{product.id}}' class='w-12 border h-auto rounded-l-full p-1  text-sm font-bold hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed'
+                                    x-on:click="count--"
+                                    :disabled="count <=1"
+                                    >–</button>
+                                    <p class='border p-1 font-bold'>
+                                        <span x-text="count"></span>
+                                    </p>
+                                    <button class='w-12 border h-auto rounded-r-full p-1 text-sm font-bold hover:bg-gray-100'
+                                    x-on:click="count++"
+                                    >+</button>
+                                {% endif %}
+                            {% endfor %}
+                                
+                            </div>
+                        </td>
+                        <td class="item-total px-6 py-4">
+                            
+                            {% for key,value in product_subtotals.items %}
+                                {% if key == product.id|slugify %}
+                                
+                                GH₵ {{value|floatformat:2}}
+                                {% endif %}
+                            {% endfor %}
+                                
+                                
+                        </td>
+                        <td class="px-6 py-4">
+                             <button data-index="{{product.id}}" value="{{product.id}}"  class='update-cart flex justify-center  items-center gap-2 border-2 border-gray-700 rounded-md  p-2 text-gray-500 hover:bg-gray-300  hover:text-gray-700'>
+                                    <span>save update</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                    <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                                    </svg>
+
+
+                                </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                </tbody>
+            </table>
+            
+        </div>
+        
+        
+        <!--order summary-->
+        <div class=''>
+          
+            
+        <!--table of products-->
+        <div class="relative overflow-x-auto shadow-md rounded-lg col-span-3 bg-white">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
+                <tr>
+                    
+                    <th scope="col" class="px-6 py-3">
+                        order summary 
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody class='bg-white'>
+                <tr>
+                    <td class='px-2 py-4 text-gray-700 text-normal font-light'>Items</td>
+                    <td class='px-2 py-4 text-gray-700 text-normal text-right'>{{cart|length}}</td>
+                </tr>
+                <tr>
+                    <td class='px-2 py-4 text-gray-700 text-normal font-light'>Subtotal</td>
+                    <td class='item-total px-2 py-4 text-gray-700 text-normal text-right'>GH₵ {{cart_total|floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <td class='px-2 py-4 text-gray-700 text-normal font-light'>Shipping</td>
+                    <td class='px-2 py-4 text-gray-700 text-normal text-right'>GH₵ 00.00</td>
+                </tr>
+                <tr>
+                    <td class='px-2 py-4 text-gray-700 text-normal font-light'>Taxes</td>
+                    <td class='px-2 py-4 text-gray-700 text-normal text-right'>GH₵ 00.00</td>
+                </tr>
+                <tr class='border-t'>
+                    
+                    <td class='px-2 py-4  text-gray-700 text-lg font-light'>Total</td>
+                    <td class='px-2 py-4 text-gray-700 text-normal text-right'>GH₵ {{cart_total|floatformat:2}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <button class='text-tight text-lg font-semibold w-full text-center text-black bg-yellow-500 rounded-md py-2 px-4 mt-8 hover:bg-black hover:text-white duration-300'>
+                proceed to checkout
+            </button>
+        </div>
+       
+            
+            
+        </div>
+        
+    </div>
+    {% else %}
+        <div class='w-120 mx-auto'>
+            <h1 class='text-xl font-light text-center mb-2 capitalize'>
+                Your shopping cart is empty...
+            </h1>
+            <img class='mb-15' src="{% static "images/add_to_cart.png" %}" alt="">
+        </div>
+    {% endif %}
+
+        <!--update cart-->
+    <script>
+        $(document).on('click','.update-cart', function(e){
+            e.preventDefault();
+            
+            var $row = $(this).closest('tr');
+            var productid = $(this).data('index');
+            var productqty = $row.find('.update_qty').val();
+            var csrf_token = $('{% csrf_token%}').val();
+            $.ajax({
+                type:"POST",
+                url: '{% url 'cart:cart_update'%}',
+                data: {
+                    product_id: productid,
+                    product_qty: productqty,
+                    csrfmiddlewaretoken: csrf_token,
+                    action:'post',
+                },
+
+                success: function(json){
+                    console.log(json)
+                    location.reload(); //reloads page
+
+                    $row.find('.item-total').text("GH₵"+ json.item_total)
+                },
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+    </script>
+
+
+    <!--delete product from cart-->
+    <script>
+        $(document).on('click','.delete-product', function(e){
+            e.preventDefault();
+            
+            //var $row = $(this).closest('tr');
+            var productid = $(this).data('index');
+            
+            var csrf_token = $('{% csrf_token%}').val();
+            $.ajax({
+                type:"POST",
+                url: '{% url 'cart:cart_delete'%}',
+                data: {
+                    product_id: productid,
+                    csrfmiddlewaretoken: csrf_token,
+                    action:'post',
+                },
+
+                success: function(json){
+                    console.log(json)
+                    location.reload(); //reloads page
+
+                    //$row.find('.item-total').text("GH₵"+ json.item_total)
+                },
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        });
+    </script>
+
+</div>
+
+{% endblock content %}
+
+
+

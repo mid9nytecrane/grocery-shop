@@ -1,0 +1,25 @@
+ <div class='md:w-auto w-40 bg-slate-100 rounded-lg hover:scale-110 transition transform duration-300'>
+    <img class='rounded-t-lg' src="" width="450" height="450" alt="{{product.name}}">
+    <div class='py-4 px-1.5'>
+        
+        <h1 class='text-sm md:text-normal -mt-2 mb-2 font-semibold text-gray-700'>
+            <span class="font-semibold text-sm md:text-lg"><strong>{{product.name}}</strong> </span> <br>
+
+        </h1>
+        <hr>
+        <!--view and add cart buttons-->
+        <div class='flex  md:justify-between md:items-center mt-4'>
+            <div>
+
+                <a href="#" class='rounded-full md:rounded-md w-30 md:w-30 px-4 py-2 text-center bg-purple-700 text-white text-xs md:text-small font-semibold'>view</a>
+                <button class='rounded-full md:rounded-md w-30 md:w-30 px-4 py-2 bg-purple-700 text-white text-xs md:text-small font-semibold'>add to cart</button>
+            </div>
+            <p><strong>GHC{{product.price}}</strong></p>
+        </div>
+    </div>
+</div>
+
+
+#### log ####
+ <img class='size-8' width="50" height="50" src="https://img.icons8.com/ios-filled/50/800080/market-square.png" alt="market-square"/>
+      <span class="self-center text-xs font-semibold whitespace-nowrap dark:text-white">𝕸𝖊𝖎𝖘𝖆𝖑𝖑𝖆𝖍 <br> 𝖇𝖚𝖘𝖎𝖓𝖊𝖘𝖘  𝖈𝖊𝖓𝖙𝖗𝖊</span>
