@@ -1,30 +1,59 @@
 from django.shortcuts import render,redirect,get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.db.models import Q
 
 from .forms import SignUpForm,UpdateProfileForm
 
-from core.models import Product
+from core.models import Product,Category
 
 
-# Create your views here.
+
 
 def home(request):
-    products = Product.objects.all()
-
+    products = Product.objects.filter(is_sold=False)
+    categories = Category.objects.all()
+    
+    
     context={
         'products': products,
+        'categories': categories,
     }
 
     return render(request, 'core/home.html', context)
 
+# category page > list products
+def list_of_category_products(request, slug):
+    q = request.GET.get('q', None)
+    category = get_object_or_404(Category, slug=slug)
+    category_products = Product.objects.filter(category=category, is_sold=False)
+    if q is None or q == '':
+        category_products = Product.objects.filter(category=category, is_sold=False)
+    else:
+        category_products = Product.objects.filter(
+            Q(category=category) & Q(name__contains=q),
+            is_sold=False
+        )
+        
+    
+
+    
+    return render(request, 'core/category_list.html', {
+        'category': category,
+        'category_products':category_products,
+    })
+
 
 def detail(request,pk):
     product = get_object_or_404(Product,id=pk)
+    related_products = Product.objects.filter(category=product.category, is_sold=False).exclude(pk=pk)[0:4]
     context = {
         'product':product,
+        'related_products': related_products,
     }
     return render(request,'core/details.html', context)
+
+
     
 
  # sign up page

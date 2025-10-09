@@ -6,6 +6,7 @@ from core import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('category/<slug:slug>/', views.list_of_category_products, name='category-details'),
     path('details/<int:pk>/', views.detail, name='detail'),
 
     path('login/', views.user_login, name='login'),

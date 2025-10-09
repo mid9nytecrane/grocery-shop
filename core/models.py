@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify 
+
 
 # Create your models here.
 
@@ -28,8 +30,15 @@ class Customer(models.Model):
     def __str__(self):
         return self.name 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(blank=True, default="")
+
+    def save(self, *args, **kwargs):
+        if not self.slug:   
+            self.slug = slugify(self.name)
+        super(Category, self).save()
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -43,7 +52,7 @@ class Product(models.Model):
     price = models.FloatField()
     image = models.ImageField(null=True, upload_to='images/', blank=True)
     is_sold = models.BooleanField(default=False)
-    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE )
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name="products" )
     is_added_to_cart = models.BooleanField(default=False)
 
     def __str__(self):
