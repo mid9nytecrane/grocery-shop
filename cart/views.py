@@ -96,3 +96,7 @@ def cart_delete(request):
         messages.success(request, f"{product} has been deleted from cart".title())
         return response
     
+
+
+def checkout(request):
+    return render(request, 'cart/checkout.html', {})

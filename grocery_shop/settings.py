@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'cart',
     'accounts',
+    'orders',
 ]
 
 LOGIN_REDIRECT_URL = '/'

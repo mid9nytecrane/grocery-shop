@@ -24,6 +24,7 @@ class Profile(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    profile = models.OneToOneField(Profile,on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255, null=True)
     email = models.EmailField()
 
@@ -60,7 +61,7 @@ class Product(models.Model):
     
 
 class Order(models.Model):
-    product = models.CharField(max_length=100)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     quantity = models.PositiveBigIntegerField(default=1)
     adddress = models.CharField(max_length=250, default="", null=True , blank=True)
@@ -69,7 +70,7 @@ class Order(models.Model):
     status = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.product
+        return f"order - {self.id} ({self.product})"
     
 
 

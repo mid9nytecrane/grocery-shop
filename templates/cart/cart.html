@@ -202,9 +202,12 @@
         </table>
 
         <div>
-            <button class='text-tight text-lg font-semibold w-full text-center text-black bg-yellow-500 rounded-md py-2 px-4 mt-8 hover:bg-black hover:text-white duration-300'>
-                proceed to checkout
-            </button>
+            <a href="{% url 'checkout:checkout'%}">
+
+                <button class='text-tight text-lg font-semibold w-full text-center text-black bg-yellow-500 rounded-md py-2 px-4 mt-8 hover:bg-black hover:text-white duration-300'>
+                    proceed to checkout
+                </button>
+            </a>
         </div>
        
             
