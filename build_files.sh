@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 echo "Building grocery shop project..."
 python -m pip install -r requirements.txt

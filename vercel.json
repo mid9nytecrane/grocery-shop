@@ -22,6 +22,7 @@
 
     "env":{
         "DEBUG":"False",
-        "PYTHONPATH":"/vercel/path0/"
+        "PYTHONPATH":"/vercel/path0/",
+        "ALLOWED_HOSTS":"www.meisallahbusinesscenter.com,meisallahbusinesscenter.com,.vercel.app,.now.sh"
     }
 }
