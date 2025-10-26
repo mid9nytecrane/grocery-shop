@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 
@@ -97,6 +97,12 @@ def cart_delete(request):
         return response
     
 
+def clear_cart(request):
+    cart = Cart(request)
+    cart.clear_cart()
+
+    messages.succes("your cart is cleared...")
+    return redirect('home')
 
 def checkout(request):
     return render(request, 'cart/checkout.html', {})

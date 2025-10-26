@@ -161,7 +161,7 @@ class Cart():
         #     for product in products:
         #         if product.id == key:
         #             total = total +  (product.price * value)
-        # return total 
+        # return total ~
 
         subtotals = self.product_subtotal()
         return sum(subtotals.values())
@@ -237,5 +237,20 @@ class Cart():
                 del self.cart[product_id]
             
             self.session.modified = True 
+    
 
+    def clear_cart(self):
+        if self.user.is_authenticated:
+            try:
+                db_cart = MyCart.objects.get(user=self.user)
+                CartItem.objects.filter(cart=db_cart).delete()
+            except MyCart.DoesNotExist:
+                pass 
+        
+        else:
+            self.cart = {}
+            self.session['session_key'] = {}
 
+        self.session.modified = True 
+
+    

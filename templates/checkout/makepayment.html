@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+
+
+{% block content %}
+
+<div class='w-full py-10 md:py-14 text-gray-700 bg-slate-300'>
+    <h1 class='text-center text-3xl md:text-3xl lg:text-3xl font-semibold'>Make Payment</h1>
+</div>
+
+<section class="min-h-screen -mt-20 sbg-gray-100 flex items-center justify-center py-12 px-4">
+  <div class="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+    <!-- Header -->
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+      Secure Payment
+    </h1>
+    <p class="text-gray-600 leading-relaxed mb-6">
+      Proceed to complete your payment securely. Click the button below and choose your preferred payment method (Card, Mobile Money, etc.).
+    </p>
+
+    <!-- Illustration (optional) -->
+    <div class="flex justify-center mb-6">
+    </div>
+
+        <button onclick="payWithPaystack()" class="text-tight text-lg font-semibold w-full text-center text-black bg-yellow-500 rounded-md py-2 px-4 mt-8 hover:bg-black hover:text-white duration-300 hover:scale-105">Make payment</button>
+    
+</section>
+
+
+
+<script>
+    function payWithPaystack() {
+        let currency = 'GHS';
+        let plan = '';
+        let ref = '{{payment.reference}}';
+        let amount = {{payment.amount}} * 100;
+        let pubKey = '{{paystack_pub_key}}';
+        let obj = {
+            key: pubKey,
+            email: '{{payment.email}}',
+            amount: amount,
+            ref: ref,
+            callback: function (response) {
+                window.location.href = "{% url 'orders:verify-payment' payment.reference %}";
+            },
+        };
+        if (Boolean(currency)) {
+            obj.currency = currency.toUpperCase();
+        }
+        if (Boolean(plan)) {
+            obj.plan = plan;
+        }
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe();
+    }
+        
+</script>
+
+<script type="application/javascript" src="https://js.paystack.co/v1/inline.js"></script>
+
+
+
+
+{% endblock content %}
+
+
+
+
+

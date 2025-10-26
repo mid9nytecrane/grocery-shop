@@ -18,6 +18,7 @@ class CheckoutForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={
                 'class': 'w-full rounded-lg p-3 border border-gray',
                 'placeholder': "e.g 024xxxxxxx",
+                
             }),
 
             'address': forms.TextInput(attrs={

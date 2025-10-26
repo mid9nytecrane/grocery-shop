@@ -6,12 +6,13 @@ from django.db.models import Q
 from .forms import SignUpForm,UpdateProfileForm
 
 from core.models import Product,Category
+from orders.models import Order,OrderItem
 
 
 
 
 def home(request):
-    products = Product.objects.filter(is_sold=False)
+    products = Product.objects.filter(is_sold=False)[:12]
     categories = Category.objects.all()
     
     
@@ -107,7 +108,45 @@ def user_logout(request):
 
 def userprofile(request):
     profile = request.user.profile
-    return render(request, 'core/userprofile.html', {'profile': profile})
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")[:5]
+
+    # order_items = OrderItem.objects.all()
+    # for order_item in order_items:
+    #     print(f"full_name: {order_item.order.full_name}")
+    #     print(f"order number: {order_item.order.order_number}")
+    #     print(f"user: {order_item.order.user}")
+
+    order_items = OrderItem.objects.select_related('order', 'order__user').filter(order__user=request.user)[:5]
+
+    for order_item in order_items:
+        print(f"full_name: {order_item.order.full_name}")
+        print(f"order number: {order_item.order.order_number}")
+        print(f"user: {order_item.order.user}")
+        print(f"order status: {order_item.order.status}")
+        print(f"total price: {order_item.total_price}\n")
+
+
+    
+    # for order in orders:
+    #     for order_item in order.order_items.all():
+    #         print(f"order item: {order_item}")
+    #         print(f"user: {order_item}")
+    #         print(f"product: {order_item.product}")
+    #         print(f"produce price: {order_item.price}")
+    #         print(f"product quantity: {order_item.quantity}")
+    #         print(f"total_price: {order_item.total_price}\n")
+
+    # for order in orders:
+    #     order_items = order.order_items.all()
+            
+    
+    context = {
+        'profile': profile,
+        'orders':orders,
+        'order_items':order_items,
+       
+    }
+    return render(request, 'core/userprofile.html', context)
 
 
 def user_profile_update(request):

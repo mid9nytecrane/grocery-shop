@@ -68,20 +68,27 @@
         <div>
           <h3 class="text-xl font-semibold text-amber-400 mb-4">Recent Orders</h3>
           <div class="space-y-4">
-            <div class="flex justify-between items-center bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
-              <div>
-                <p class="font-medium">Order #1023</p>
-                <p class="text-gray-400 text-sm">2 items — GH₵120.99</p>
+            {% if order_items %}
+              {% for order in order_items %}
+              
+              <div class="flex justify-between items-center bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
+                <div>
+                  <p class="font-medium">Order {{order.order.order_number}}</p>
+                  <p class="font-light text-sm">Order-Date : {{order.order.created_at}}</p>
+                  <p class="text-gray-400 text-sm">{{order.order_items.count}} items — GH₵ {{order.total_price}}
+                  </p>
+                </div>
+                {% if order.order.status == "On Delivery" %}
+                  <span class="text-yellow-400 text-sm font-semibold">{{order.order.status}}</span>
+                {% elif order.order.status == "Delivered" %}  
+                  <span class="text-green-400 text-sm font-semibold">{{order.order.status}}</span>
+                {% else %}
+                  <span class="text-gray-200 text-sm font-semibold">{{order.order.status}}</span>
+                {% endif %}
               </div>
-              <span class="text-green-400 text-sm font-semibold">Delivered</span>
-            </div>
-            <div class="flex justify-between items-center bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
-              <div>
-                <p class="font-medium">Order #1018</p>
-                <p class="text-gray-400 text-sm">1 item — GH₵45.00</p>
-              </div>
-              <span class="text-yellow-400 text-sm font-semibold">Pending</span>
-            </div>
+              
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
 
