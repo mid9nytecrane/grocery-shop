@@ -4,13 +4,24 @@
         {
             "src": "grocery_shop/wsgi.py",
             "use": "@vercel/python",
-            "config": { "maxLambdaSize": "15mb" }
+            "config": { "maxLambdaSize": "15mb" , "pythonVersion": "3.9" }
 
+        },
+        {
+            "src":"build_static.sh",
+            "use":"@vercel/static-build"
         }
         
     ],
 
     "routes": [
-        { "src": "/(.*)", "dest": "grocery_shop/wsgi.py" }
-    ]
+        { "src": "/(.*)", "dest": "grocery_shop/wsgi.py" },
+        {"src":"/media/(.*)","dest":"/media/$1"},
+        {"src":"/static/(.*)","dest":"/static/$1"}
+    ],
+
+    "env":{
+        "DEBUG":"False",
+        "PYTHONPATH":"/vercel/path0/"
+    }
 }
