@@ -33,7 +33,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [".vercel.app", "127.0.0.1", ".now.sh"]
 
 
 # Application definition
@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'grocery_shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if os.environ.get("VERCEL"):
+if DEBUG == "False":
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
