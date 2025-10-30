@@ -178,17 +178,17 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-if DEBUG == False :
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True 
-    EMAIL_HOST_USER = config("EMAIL_ADDRESS")
-    EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# if DEBUG == False :
+#     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#     EMAIL_HOST = "smtp.gmail.com"
+#     EMAIL_PORT = 587
+#     EMAIL_USE_TLS = True 
+#     EMAIL_HOST_USER = config("EMAIL_ADDRESS")
+#     EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
+#     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
     
-else:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# else:
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 PAYSTACK_SECRET_KEY = config("PAYSTACK_SECRET_KEY")
