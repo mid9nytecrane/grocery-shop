@@ -1,0 +1,126 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="min-h-screen bg-gray-50 text-gray-800">
+  <!-- Hero Section -->
+  <div class="bg-slate-200 text-gray-900 py-16 px-6 text-center">
+    <h1 class="text-3xl md:text-5xl font-extrabold mb-3 tracking-tight">
+      About Meisallah Business Center
+    </h1>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto">
+      Your trusted grocery and household essentials shop in Wa, Upper West Region, Ghana.
+    </p>
+  </div>
+
+  <!-- About Section -->
+  <div class="max-w-6xl mx-auto  px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <!-- Image -->
+    <div class="flex justify-center">
+      <img 
+        src="{% static "images/about_img.jpeg"%}" 
+        alt="Grocery store shelves"
+        class="rounded-2xl shadow-lg w-full md:w-11/12 object-cover hover:scale-105 duration-300"
+      >
+    </div>
+
+    <!-- Text -->
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900">Who We Are</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Meisallah Business Center is a local grocery and household essentials store dedicated to
+        providing fresh, high-quality, and affordable products to the Wa community and beyond.
+        Whether you're shopping in-store or online, we make it simple, convenient, and reliable.
+      </p>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Our mission is to connect people with everyday essentials they can trust — from groceries and
+        fresh produce to household items and beverages — all sourced with care and delivered with
+        professionalism.
+      </p>
+      <p class="text-gray-600 leading-relaxed">
+        We’re proud to serve our customers across the Upper West Region and continually improve our
+        services through digital innovation and community engagement.
+      </p>
+    </div>
+  </div>
+
+   <!-- Location Section -->
+    <div class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="bg-gray-200 h-100 rounded-lg overflow-hidden shadow-lg hover:scale-104 duration-300 transition">
+                        <img src="{% static "images/about_img2.jpeg" %}" alt="Wa location" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-10">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Our Location</h2>
+                    <p class="text-gray-700 mb-4">
+                        Conveniently located in the heart of Wa, the capital of the Upper West Region, Meisallah Business Center is easily accessible to residents across the area.
+                    </p>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-semibold text-primary mb-2">Address</h3>
+                        <p class="text-gray-700">Main Commercial Street, Wa, Upper West Region, Ghana</p>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-semibold text-primary mb-2">Operating Hours</h3>
+                        <p class="text-gray-700">Monday - Saturday: 7:00 AM - 8:00 PM</p>
+                        <p class="text-gray-700">Sunday: 8:00 AM - 6:00 PM</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-primary mb-2">Contact</h3>
+                        <p class="text-gray-700">Phone: +233 XX XXX XXXX</p>
+                        <p class="text-gray-700">Email: info@meisallah.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+  <!-- Values Section -->
+  <div class="bg-gray-900 text-white py-16 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-10">Our Core Values</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-gray-800 rounded-xl p-6 shadow-md hover:bg-gray-700 duration-300">
+          <h3 class="text-xl font-semibold mb-3">Quality</h3>
+          <p class="text-gray-300">
+            We source the best products to ensure every customer gets only top-quality items.
+          </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl p-6 shadow-md hover:bg-gray-700 duration-300">
+          <h3 class="text-xl font-semibold mb-3">Reliability</h3>
+          <p class="text-gray-300">
+            From order to delivery, we make shopping smooth, secure, and dependable every time.
+          </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl p-6 shadow-md hover:bg-gray-700 duration-300">
+          <h3 class="text-xl font-semibold mb-3">Community</h3>
+          <p class="text-gray-300">
+            We’re proudly rooted in Wa, supporting local families and businesses through fair prices and service.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <!-- Call to Action -->
+  <div class="bg-yellow-400 py-12 text-center text-gray-900">
+    <h2 class="text-2xl font-bold mb-3">Visit or Shop with Us Today!</h2>
+    <p class="max-w-2xl mx-auto mb-6">
+      Located in Wa, Upper West Region — we’re here to make grocery shopping easier and more enjoyable for you.
+    </p>
+    <a href="/"
+       class="bg-gray-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-800 hover:scale-105 duration-300">
+      Start Shopping
+    </a>
+  </div>
+</section>
+
+{% endblock content %}
+
+

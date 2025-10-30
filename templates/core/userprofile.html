@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-
+{% load static %}
 {% block content %}
 <div class='w-full py-10 md:py-14 text-gray-700 bg-slate-300'>
     <h1 class='text-center text-3xl md:text-3xl lg:text-3xl font-semibold'>Your Profile</h1>
@@ -9,92 +9,100 @@
 
 <section class="min-h-screen bg-gray-50 text-gray-100 py-12">
   <div class="container mx-auto px-6 lg:px-12">
-
-    <!-- Profile Header -->
+  
+  <!-- Profile Header -->
+   
+   
     <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-gray-700 pb-6">
         <!-- https://cdn-icons-png.flaticon.com/512/3135/3135715.png-->
+      {% if profile.profile_image.url %}
       <img src="{{profile.profile_image.url}}" 
-           alt="User Avatar" 
-           class="w-28 h-28 rounded-full  border-4 border-amber-500 shadow-md">
+            alt="User Avatar" 
+            class="w-28 h-28 rounded-full  border-4 border-amber-500 shadow-md">
+      {% else %}
+        <p>no picture</p>
+      {% endif %}
       <div class="text-center md:text-left space-y-1">
         <h2 class="text-2xl text-gray-800 font-bold">Sheriff Sakara</h2>
         <p class="text-gray-700 font-medium">@{{request.user.username}}</p>
         <p class="text-gray-400 text-sm">Joined: {{request.user.date_joined}}</p>
       </div>
     </div>
+  
 
-    <!-- Profile Content -->
-    <div class="grid gap-8 md:grid-cols-3">
+  <!-- Profile Content -->
+  <div class="grid gap-8 md:grid-cols-3">
 
-      <!-- Sidebar -->
-      <aside class="bg-gray-800 p-6 rounded-2xl shadow-lg space-y-4">
-        <h3 class="text-lg font-semibold text-amber-400 mb-2">Menu</h3>
-        <nav class="space-y-3">
-          <a href="{% url 'userprofile'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Profile Overview</a>
-          <a href="{% url 'profile_update'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Edit Profile</a>
-          <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Order History</a>
-          <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Saved Addresses</a>
-          <a href="{% url 'logout'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Logout</a>
-        </nav>
-      </aside>
+    <!-- Sidebar -->
+    <aside class="bg-gray-800 p-6 rounded-2xl shadow-lg space-y-4">
+      <h3 class="text-lg font-semibold text-amber-400 mb-2">Menu</h3>
+      <nav class="space-y-3">
+        <a href="{% url 'userprofile'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Profile Overview</a>
+        <a href="{% url 'profile_update'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Edit Profile</a>
+        <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Order History</a>
+        <a href="#" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Saved Addresses</a>
+        <a href="{% url 'logout'%}" class="block py-2 px-3 rounded-lg hover:bg-gray-700 transition">Logout</a>
+      </nav>
+    </aside>
 
-      <!-- Main Content -->
-      <div class="md:col-span-2 bg-gray-800 p-8 rounded-2xl shadow-lg space-y-8">
-        
-        <!-- Personal Info -->
-        <div>
-          <h3 class="text-xl font-semibold text-amber-400 mb-4">Personal Information</h3>
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <p class="text-gray-400 text-sm">Full Name</p>
-              <p class="font-medium">{{request.user.first_name}} {{request.user.last_name}}</p>
-            </div>
-            <div>
-              <p class="text-gray-400 text-sm">Email</p>
-              <p class="font-medium">{{request.user.email}}</p>
-            </div>
-            <div>
-              <p class="text-gray-400 text-sm">Phone</p>
-              <p class="font-medium">{{profile.phone}}</p>
-            </div>
-            <div>
-              <p class="text-gray-400 text-sm">Location</p>
-              <p class="font-medium">{{profile.town}}, {{profile.region}}, Ghana</p>
-            </div>
+    <!-- Main Content -->
+    <div class="md:col-span-2 bg-gray-800 p-8 rounded-2xl shadow-lg space-y-8">
+      
+      
+      <!-- Personal Info -->
+      <div>
+        <h3 class="text-xl font-semibold text-amber-400 mb-4">Personal Information</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-gray-400 text-sm">Full Name</p>
+            <p class="font-medium">{{request.user.first_name}} {{request.user.last_name}}</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Email</p>
+            <p class="font-medium">{{request.user.email}}</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Phone</p>
+            <p class="font-medium">{{profile.phone}}</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Location</p>
+            <p class="font-medium">{{profile.town}}, {{profile.region}}, Ghana</p>
           </div>
         </div>
-
-        <!-- Recent Orders -->
-        <div>
-          <h3 class="text-xl font-semibold text-amber-400 mb-4">Recent Orders</h3>
-          <div class="space-y-4">
-            {% if order_items %}
-              {% for order in order_items %}
-              
-              <div class="flex justify-between items-center bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
-                <div>
-                  <p class="font-medium">Order {{order.order.order_number}}</p>
-                  <p class="font-light text-sm">Order-Date : {{order.order.created_at}}</p>
-                  <p class="text-gray-400 text-sm">{{order.order_items.count}} items — GH₵ {{order.total_price}}
-                  </p>
-                </div>
-                {% if order.order.status == "On Delivery" %}
-                  <span class="text-yellow-400 text-sm font-semibold">{{order.order.status}}</span>
-                {% elif order.order.status == "Delivered" %}  
-                  <span class="text-green-400 text-sm font-semibold">{{order.order.status}}</span>
-                {% else %}
-                  <span class="text-gray-200 text-sm font-semibold">{{order.order.status}}</span>
-                {% endif %}
-              </div>
-              
-              {% endfor %}
-            {% endif %}
-          </div>
-        </div>
-
       </div>
+
+      <!-- Recent Orders -->
+      <div>
+        <h3 class="text-xl font-semibold text-amber-400 mb-4">Recent Orders</h3>
+        <div class="space-y-4">
+          {% if order_items %}
+            {% for order in order_items %}
+            
+            <div class="flex justify-between items-center bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
+              <div>
+                <p class="font-medium">Order {{order.order.order_number}}</p>
+                <p class="font-light text-sm">Order-Date : {{order.order.created_at}}</p>
+                <p class="text-gray-400 text-sm">{{order.order_items.count}} items — GH₵ {{order.total_price}}
+                </p>
+              </div>
+              {% if order.order.status == "On Delivery" %}
+                <span class="text-yellow-400 text-sm font-semibold">{{order.order.status}}</span>
+              {% elif order.order.status == "Delivered" %}  
+                <span class="text-green-400 text-sm font-semibold">{{order.order.status}}</span>
+              {% else %}
+                <span class="text-gray-200 text-sm font-semibold">{{order.order.status}}</span>
+              {% endif %}
+            </div>
+            
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
     </div>
   </div>
+</div>
 </section>
 
 

@@ -1,18 +1,19 @@
 from django.shortcuts import render,redirect,get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate,login,logout
+
 from django.contrib import messages
 from django.db.models import Q
 
 from .forms import SignUpForm,UpdateProfileForm
 
-from core.models import Product,Category
+from core.models import Product,Category,Profile
 from orders.models import Order,OrderItem
 
 
 
 
 def home(request):
-    products = Product.objects.filter(is_sold=False)[:12]
+    products = Product.objects.filter(is_sold=False).order_by('-created_at')[:12]
     categories = Category.objects.all()
     
     
@@ -55,23 +56,30 @@ def detail(request,pk):
     return render(request,'core/details.html', context)
 
 
+#about page
+def about_page(request):
+
+    return render(request, 'core/about.html')
     
 
  # sign up page
 def user_signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+            
+            return redirect('login')
+            # username = form.cleaned_data.get('username')
+            # password = form.cleaned_data.get('password')
 
-            user = authenticate(username=username, password=password)
+            # user = authenticate(username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                messages.success(request,"you're logged in")
-                return redirect('home')
+            # if user is not None:
+            #     login(request, user)
+            #     messages.success(request,"you're logged in")
+            #     return redirect('home')
         else:
             HttpResponse('form is invalid and not saved.')
 
@@ -116,7 +124,7 @@ def userprofile(request):
     #     print(f"order number: {order_item.order.order_number}")
     #     print(f"user: {order_item.order.user}")
 
-    order_items = OrderItem.objects.select_related('order', 'order__user').filter(order__user=request.user)[:5]
+    order_items = OrderItem.objects.select_related('order', 'order__user').filter(order__user=request.user).order_by('-created_at')[:5]
 
     for order_item in order_items:
         print(f"full_name: {order_item.order.full_name}")

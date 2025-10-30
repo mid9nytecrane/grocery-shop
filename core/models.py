@@ -11,12 +11,15 @@ class Profile(models.Model):
         "female":"FEMALE",
     }
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=12, null=True)
-    address = models.CharField(max_length=50, null=True)
-    region = models.CharField(max_length=100, null=True)
-    town = models.CharField(max_length=100, null=True)
-    gender = models.CharField(max_length=8, choices=GENDER, default="")
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    phone = models.CharField(max_length=12, null=True, blank=True)
+    address = models.CharField(max_length=50, null=True, blank=True)
+    region = models.CharField(max_length=100, null=True, blank=True)
+    town = models.CharField(max_length=100, null=True, blank=True)
+    gender = models.CharField(max_length=8, choices=GENDER, default="", blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/',
+                                      default="defauts/dp.png", 
+                                      null=True, 
+                                      blank=True)
 
     def __str__(self):
         return f"{self.user}'s profile"
@@ -54,6 +57,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, upload_to='images/', blank=True)
     is_sold = models.BooleanField(default=False)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name="products" )
+    created_at = models.DateTimeField(auto_now=True)
     is_added_to_cart = models.BooleanField(default=False)
 
     def __str__(self):
